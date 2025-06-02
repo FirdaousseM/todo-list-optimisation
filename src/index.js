@@ -6,6 +6,6 @@ app.use(express.json());
 
 app.use("/todos", todoRouter);
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`todo api listening on port ${port}`);
 });
