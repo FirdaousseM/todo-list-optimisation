@@ -8,4 +8,13 @@ Projet académique
 
 # Lancement
 
-- Lancer la commande : docker-compose up
+- npx prisma db pull
+
+- npx prisma generate
+
+- Lancer l'api en arrière plan : docker-compose up -d
+
+
+# Tests (application déjà lancée)
+
+- Lancer le test k6 : docker-compose run --rm k6

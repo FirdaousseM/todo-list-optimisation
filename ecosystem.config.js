@@ -6,7 +6,7 @@ module.exports = {
       instances: "max",
       exec_mode: "cluster",
       env: {
-        NODE_ENV: "production",
+        NODE_ENV: "development",
         PORT: 3000,
         DATABASE_URL: "file:./dev.db",
       },
