@@ -10,10 +10,10 @@ services:
       - ./data:/app/data
       - ./src:/app/src
       - ./package.json:/app/package.json
-  # k6:
-  #   image: grafana/k6
-  #   environment:
-  #     - API_URL=http://todolist-app:3000
-  #   volumes:
-  #     - ./tests:/tests
-  #   entrypoint: ["k6", "run", "/tests/load.test.js"]
+  k6:
+    image: grafana/k6
+    environment:
+      - API_URL=http://todolist-app:3000
+    volumes:
+      - ./tests:/tests
+    entrypoint: ["k6", "run", "/tests/load.test.js"]
