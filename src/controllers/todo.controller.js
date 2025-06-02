@@ -18,7 +18,11 @@ const controller = {
 
   getTodos: async (req, res) => {
     try {
-      const todos = await todoModel.getTodos();
+      const doneParam = req.query.done;
+      let done;
+      if (doneParam === 'true') done = true;
+      else if (doneParam === 'false') done = false;
+      const todos = await todoModel.getTodos(done);
       res.json(todos);
     } catch (err) {
       res.status(500).json({ error: err.message });
