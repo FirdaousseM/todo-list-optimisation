@@ -14,9 +14,6 @@ export default function () {
     JSON.stringify({ title: `Tâche créée par k6 ${randomNumber}` }),
     { headers: { "Content-Type": "application/json" } }
   );
-  console.log("POST status:", postRes.status);
-  console.log("POST body:", postRes.body);
-  console.log("POST json.json:", postRes.json().json);
 
   check(postRes, { "POST status is 201": (r) => r.status === 201 });
 
@@ -26,7 +23,8 @@ export default function () {
   let getRes = http.get(`${API_URL}/todos`);
   check(getRes, { "GET status is 200": (r) => r.status === 200 });
 
-  let patchRes = http.patch(`${API_URL}/${todoId}/done`);
+  let patchRes = http.patch(`${API_URL}/todos/${todoId}/done`);
+
   check(patchRes, { "PATCH status is 200": (r) => r.status === 200 });
 
   sleep(1);

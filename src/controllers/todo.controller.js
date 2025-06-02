@@ -6,9 +6,7 @@ const todoController = express();
 const controller = {
   createTodo: async (req, res) => {
     try {
-      console.log(req.body);
       const { title } = req.body;
-      console.log(title);
       const todo = await todoModel.createTodo(title);
       res.status(201).json(todo);
     } catch (err) {

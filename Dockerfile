@@ -3,7 +3,10 @@ FROM node:18
 WORKDIR /app
 
 COPY package.json ./
+RUN npm install -g pm2
 RUN npm install
+
+EXPOSE 3000
 
 COPY . .
 RUN sqlite3 ./prisma/dev.db < prisma/script.sql
