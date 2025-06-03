@@ -7,8 +7,14 @@ todoModel = {
       data: { title },
     });
   },
-  getTodos: async () => {
-    return await prisma.todo.findMany();
+  getTodos: async (done) => {
+    const whereClause = typeof done === 'boolean' ? { done } : {};
+    return await prisma.todo.findMany({ where: whereClause });
+  },
+  getTodosByDone: async (done) => {
+    return await prisma.todo.findMany({
+      where: { done },
+    });
   },
   markTodoDone: async (id) => {
     return await prisma.todo.update({

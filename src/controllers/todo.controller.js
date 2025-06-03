@@ -6,9 +6,7 @@ const todoController = express();
 const controller = {
   createTodo: async (req, res) => {
     try {
-      console.log(req.body);
       const { title } = req.body;
-      console.log(title);
       const todo = await todoModel.createTodo(title);
       res.status(201).json(todo);
     } catch (err) {
@@ -18,7 +16,11 @@ const controller = {
 
   getTodos: async (req, res) => {
     try {
-      const todos = await todoModel.getTodos();
+      const doneParam = req.query.done;
+      let done;
+      if (doneParam === 'true') done = true;
+      else if (doneParam === 'false') done = false;
+      const todos = await todoModel.getTodos(done);
       res.json(todos);
     } catch (err) {
       res.status(500).json({ error: err.message });
