@@ -1,0 +1,2 @@
+CREATE INDEX IF NOT EXISTS idx_todo_done ON Todo(done);
+EXPLAIN QUERY PLAN SELECT * FROM Todo WHERE done = true;

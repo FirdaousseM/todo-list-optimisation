@@ -9,5 +9,6 @@ RUN npm install
 EXPOSE 3000
 
 COPY . .
+RUN sqlite3 ./prisma/dev.db < prisma/script.sql
 
 CMD ["pm2-runtime", "ecosystem.config.js"]
