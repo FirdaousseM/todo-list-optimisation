@@ -1,8 +1,12 @@
 const todoRouter = require("./routes/todos");
 const express = require("express");
+const rateLimiter = require("./middleware/rateLimiter");
+
 const app = express();
 const port = 3000;
+
 app.use(express.json());
+app.use(rateLimiter);
 
 app.use("/todos", todoRouter);
 

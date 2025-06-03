@@ -17,6 +17,7 @@ logs/
 
 # Base de données SQLite (tu peux choisir si tu veux versionner la base ou non)
 *.db
+/prisma/dev.db
 
 # Docker
 docker-compose.override.yml
