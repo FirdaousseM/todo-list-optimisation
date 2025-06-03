@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   todolist-app:
     container_name: todolist-app
@@ -10,8 +12,18 @@ services:
       - ./data:/app/data
       - ./src:/app/src
       - ./package.json:/app/package.json
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
     networks:
       - k6net 
+
+  redis:
+    image: redis:7
+    networks:
+      - k6net
+
   k6:
     build:
       context: .
@@ -20,8 +32,7 @@ services:
       - API_URL=http://todolist-app:3000
     volumes:
       - ./tests:/tests
-    command: run --out experimental-prometheus-rw /tests/load.test.js # Runs the main k6 script
-
+    command: run --out experimental-prometheus-rw /tests/load.test.js
     entrypoint: [
       "k6", "run",
       "--out", "experimental-prometheus-rw",
@@ -51,6 +62,7 @@ services:
       - '--web.enable-remote-write-receiver'
     networks:
       - k6net
+
   grafana:
     image: grafana/grafana
     ports:
@@ -60,9 +72,9 @@ services:
     networks:
       - k6net
 
-
 volumes:
   grafana-storage:
+
 networks:
   k6net:
     driver: bridge

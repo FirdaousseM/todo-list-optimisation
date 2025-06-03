@@ -5,11 +5,12 @@ const todoController = require("../controllers/todo.controller");
 
 const validateSchema = require("../middleware/validateSchema");
 const validateParams = require("../middleware/validateParams");
+const idempotencyMiddleware = require("../middleware/idempotency");
 
 const todoSchema = require("../schemas/todo.schema");
 const todoIdParamSchema = require("../schemas/todo-id-param.schema");
 
-todoRouter.post("/", validateSchema(todoSchema), todoController.createTodo);
+todoRouter.post("/", idempotencyMiddleware, validateSchema(todoSchema), todoController.createTodo);
 todoRouter.get("/", todoController.getTodos);
 
 // Ajoute la validation des paramètres (id doit être un entier positif sous forme de chaîne)
