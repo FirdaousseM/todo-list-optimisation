@@ -1,3 +1,4 @@
+require("./middleware/otel");
 const todoRouter = require("./routes/todos");
 const express = require("express");
 const app = express();

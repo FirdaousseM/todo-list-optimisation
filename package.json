@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.202.0",
+    "@opentelemetry/sdk-node": "^0.202.0",
     "@prisma/client": "^6.8.2",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",

@@ -60,7 +60,16 @@ services:
     networks:
       - k6net
 
-
+  otel-collector:
+      image: otel/opentelemetry-collector:latest
+      command: ["--config=/etc/otel-collector-config.yaml"]
+      volumes:
+        - ./otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      ports:
+        - "4318:4318" 
+        - "9464:9464" 
+      networks:
+        - k6net
 volumes:
   grafana-storage:
 networks:
