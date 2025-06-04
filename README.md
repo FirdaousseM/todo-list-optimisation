@@ -8,6 +8,8 @@ Projet académique
 
 # Lancement
 
+- npm install
+
 - npx prisma generate
 
 - npx prisma db push
