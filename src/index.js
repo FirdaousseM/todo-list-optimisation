@@ -1,9 +1,12 @@
 const todoRouter = require("./routes/todos");
+const compression = require("compression");
 const express = require("express");
 const rateLimiter = require("./middleware/rateLimiter");
 
 const app = express();
 const port = 3000;
+
+app.use(compression());
 
 app.use(express.json());
 app.use(rateLimiter);

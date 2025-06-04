@@ -2,6 +2,11 @@ version: "3.8"
 
 services:
   todolist-app:
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:3000/todos"]
+        interval: 5s
+        timeout: 2s
+        retries: 10
     container_name: todolist-app
     build: .
     env_file:
@@ -9,6 +14,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
+      - ./prisma:/app/prisma
       - ./data:/app/data
       - ./src:/app/src
       - ./package.json:/app/package.json
@@ -25,26 +31,31 @@ services:
       - k6net
 
   k6:
+    container_name: k6
     build:
       context: .
       dockerfile: k6.Dockerfile
     environment:
       - API_URL=http://todolist-app:3000
+      - K6_PROMETHEUS_RW_SERVER_URL=http://prometheus:9090/api/v1/write
     volumes:
       - ./tests:/tests
-    command: run --out experimental-prometheus-rw /tests/load.test.js
-    entrypoint: [
-      "k6", "run",
-      "--out", "experimental-prometheus-rw",
+    command: [
+      "k6",
+      "run",
+      "--out=experimental-prometheus-rw=http://prometheus:9090/api/v1/write",
       "/tests/load.test.js"
     ]
     ports:
       - "6565:6565"
     depends_on:
-      - todolist-app
-      - prometheus  
+      todolist-app:
+        condition: service_healthy
+      prometheus:
+        condition: service_started
     networks:
       - k6net
+
 
   prometheus:
     image: prom/prometheus:latest
