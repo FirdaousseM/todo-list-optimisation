@@ -8,9 +8,9 @@ Projet académique
 
 # Lancement
 
-- npx prisma db pull
-
 - npx prisma generate
+
+- npx prisma db push
 
 - Lancer l'api en arrière plan : docker-compose up -d
 
@@ -18,6 +18,7 @@ Projet académique
 # Tests (application déjà lancée)
 
 - Lancer le test k6 : docker-compose run --rm k6
+- Lancer l'IHM Grafana dans le navigateur : http://localhost:3001 (user: admin | password : admin)
 
 ## 📊 Mesures de performance
 
