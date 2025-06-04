@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   todolist-app:
     healthcheck:
@@ -16,8 +18,18 @@ services:
       - ./data:/app/data
       - ./src:/app/src
       - ./package.json:/app/package.json
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
     networks:
       - k6net 
+
+  redis:
+    image: redis:7
+    networks:
+      - k6net
+
   k6:
     container_name: k6
     build:
@@ -61,6 +73,7 @@ services:
       - '--web.enable-remote-write-receiver'
     networks:
       - k6net
+
   grafana:
     image: grafana/grafana
     ports:
@@ -70,9 +83,9 @@ services:
     networks:
       - k6net
 
-
 volumes:
   grafana-storage:
+
 networks:
   k6net:
     driver: bridge

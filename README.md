@@ -35,3 +35,19 @@ Projet académique
 | Req/sec      | 90          | 160         |
 
 - **Conclusion** : amélioration significative des performances. ✅
+
+
+#  🔁 Idempotence
+L’API prend en charge l’idempotence sur POST /todos via le header Idempotency-Key.
+
+Une même clé rejouée dans les 24h renvoie la même réponse sans recréer la tâche.
+Les réponses sont temporairement stockées en Redis.
+Exemple :
+
+- curl -X POST http://localhost:3000/todos \
+-  -H "Content-Type: application/json" \
+-  -H "Idempotency-Key: 123abc" \
+-  -d '{"title": "Faire les courses"}'
+
+  
+⚙️ Redis doit être actif (REDIS_URL=redis://redis:6379)
